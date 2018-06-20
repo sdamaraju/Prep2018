@@ -14,6 +14,7 @@ public class PassByReferenceImpl extends Parent{
 		System.out.println(p);
 	}
 	public static void passByRef(Parent p){
+		p.name = "updatedParent";
 		p=null;
 		//p.name = "new";
 		//p.name="passedByRef";

@@ -1,5 +1,7 @@
 package trees;
 
+import java.util.Stack;
+
 import stackImplementation.StackLL;
 
 public class FindClosesAncestorFor2Nodes {
@@ -19,53 +21,53 @@ public class FindClosesAncestorFor2Nodes {
 		root.left.right.data = 5;
 		root.right.left.data = 6;
 		root.right.right.data = 7;
+		root.left.left.left = new TreeNode();
+		root.left.left.left.data=10; 
 		//System.out.println(root);
-		int closesAncestor = findClosestAncestor(root, 4,5);
+		int closesAncestor = findClosestAncestor(root, 2,3);
+		if(closesAncestor == -1) {System.out.println("No common ancestor"); return;}
+		System.out.println("Closest Ancestor is " + closesAncestor);
 	}
 	
-	public static int findClosestAncestor(TreeNode root, int node1,int node2){
-		TreeNode head = root;
-		/*StackLL st1 = new StackLL();
-		while(head != null){
-			st1.push(head.data);
-			if((Integer)head.data == node1){
-				break;
-			}else{
-				head = head.left;
+	public static int findClosestAncestor(TreeNode root,int a, int b){
+		Stack st1 = new Stack();
+		Stack st2 = new Stack();
+		recursiveCall(root,a,st1,false);
+		System.out.println(st1);
+		recursiveCall(root,b,st2,false);
+		System.out.println(st2);
+		boolean found = false;
+		while(!st1.isEmpty() || !st2.isEmpty()){
+			int temp = (int)st1.peek();
+			if((st1.pop()==(st2.pop()))){
+				return temp;
 			}
-		} 
-		StackLL st2 = new StackLL();
-		while(head != null){
-			st1.push(head.data);
-			if((Integer)head.data == node1){
-				break;
-			}else{
-				head = head.left;
-			}
-		}*/
-		StackLL st1 = new StackLL();
-		st1 = recursivecall(head,st1,node1);
-		System.out.println(st1.pop());
-		System.out.println(st1.pop());
-		System.out.println(st1.pop());
-		return node2;
+		}
+		return -1;
 	}
 	
-	static StackLL recursivecall(TreeNode root,StackLL st,int value){
-		if(root == null){
-			//st.pop();
-			return st;
+	public static boolean recursiveCall(TreeNode root,int key,Stack st,boolean keyFound){
+		if(root==null){
+			return false;
 		}
 		st.push(root.data);
-		System.out.println(st);
-		if((Integer)root.data == value){
-			return st;
-		}else{
-			st = recursivecall(root.left,st,value);
-			st = recursivecall(root.right,st,value);
-			 return st;
+		//System.out.println(st);
+		if((int)root.data == key){
+			return true;
 		}
+		//System.out.println(keyFound);
+		if(root.left !=null && keyFound == false ){
+			keyFound = recursiveCall(root.left, key, st,keyFound);
+		}
+		//System.out.println(keyFound);
+		if(root.right !=null && keyFound == false ){
+			keyFound = recursiveCall(root.right, key, st,keyFound);
+		}
+		if(!st.isEmpty() && !keyFound)st.pop();
 		
+		return keyFound;
 	}
+	
+	
 
 }
