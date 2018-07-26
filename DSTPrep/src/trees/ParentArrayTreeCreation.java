@@ -31,7 +31,7 @@ public class ParentArrayTreeCreation {
 	}
 	
 	private static Boolean constructTree(TreeNode root,int[] parentArray){
-		while(root!=null){
+	//	while(root!=null){
 			//System.out.print((Integer)root.data);
 			int i=0;
 			int leftSet = 0;
@@ -60,7 +60,7 @@ public class ParentArrayTreeCreation {
 			if(!check1 || check2){
 				return false;
 			}
-		}	
+	//	}	
 		return false;
 	}
 	
